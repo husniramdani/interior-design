@@ -1,0 +1,180 @@
+{
+  "finishes": {
+    "ash": {"label": "Ash", "type": "wood", "tex": "ash", "rotate": false, "tint": "#ffffff", "swatch": "#d9c7ab"},
+    "oak": {"label": "Oak", "type": "wood", "tex": "oak", "rotate": true, "tint": "#ffffff", "swatch": "#b98b55"},
+    "walnut": {"label": "Walnut", "type": "wood", "tex": "walnut", "rotate": true, "tint": "#d8cdc4", "swatch": "#7a5238"},
+    "smoked": {"label": "Black-stained oak", "type": "wood", "tex": "smoked", "rotate": false, "tint": "#5e5853", "swatch": "#3b3632"},
+    "white": {"label": "White", "type": "paint", "color": "#eeebe5", "roughness": 0.55, "metalness": 0.0, "swatch": "#eeebe5", "surface": "satin", "scale": 0.1},
+    "black": {"label": "Black", "type": "paint", "color": "#1f1e1d", "roughness": 0.5, "metalness": 0.0, "swatch": "#1f1e1d", "surface": "satin", "scale": 0.1},
+    "sage": {"label": "Sage green", "type": "paint", "color": "#8f9c88", "roughness": 0.6, "metalness": 0.0, "swatch": "#8f9c88", "surface": "satin", "scale": 0.1},
+    "steel_black": {"label": "Black steel", "type": "paint", "color": "#161616", "roughness": 0.42, "metalness": 0.35, "swatch": "#232323", "surface": "powder", "scale": 0.08},
+    "steel_white": {"label": "White steel", "type": "paint", "color": "#ecebe7", "roughness": 0.4, "metalness": 0.15, "swatch": "#ecebe7", "surface": "powder", "scale": 0.08},
+    "steel": {"label": "Steel", "type": "paint", "color": "#c9c9c7", "roughness": 0.3, "metalness": 1.0, "swatch": "#c9c9c7", "surface": "brushed", "scale": 0.15},
+    "brass": {"label": "Brass", "type": "paint", "color": "#b8925a", "roughness": 0.3, "metalness": 1.0, "swatch": "#b8925a", "surface": "brushed", "scale": 0.15}
+  },
+  "tables": [
+    {
+      "id": "lisa",
+      "name": "LISA",
+      "type": "Dining table",
+      "desc": "A light dining table for four, with slim tapered legs and a soft bevelled top.",
+      "dims": "140 × 78 cm, height 74 cm",
+      "seats": "4 people",
+      "price": 24990,
+      "colorways": [
+        {
+          "name": "Natural ash",
+          "slots": {
+            "Top": "ash",
+            "Frame": "ash"
+          }
+        },
+        {
+          "name": "Walnut",
+          "slots": {
+            "Top": "walnut",
+            "Frame": "walnut"
+          }
+        },
+        {
+          "name": "Black-stained oak",
+          "slots": {
+            "Top": "smoked",
+            "Frame": "smoked"
+          }
+        }
+      ]
+    },
+    {
+      "id": "studio",
+      "name": "STUDIO",
+      "type": "Work desk",
+      "desc": "A compact desk with a three-drawer unit for papers, cables and everything in between.",
+      "dims": "120 × 60 cm, height 75 cm",
+      "seats": "1 person",
+      "price": 19990,
+      "colorways": [
+        {
+          "name": "Oak & white",
+          "slots": {
+            "Top": "oak",
+            "Frame": "white",
+            "Accent": "steel"
+          }
+        },
+        {
+          "name": "All white",
+          "slots": {
+            "Top": "white",
+            "Frame": "white",
+            "Accent": "steel"
+          }
+        },
+        {
+          "name": "Walnut & black",
+          "slots": {
+            "Top": "walnut",
+            "Frame": "black",
+            "Accent": "brass"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tulip",
+      "name": "TULIP",
+      "type": "Round pedestal table",
+      "desc": "A round table on a single sculpted pedestal, so there is never a leg in the way.",
+      "dims": "Ø 100 cm, height 74 cm",
+      "seats": "4 people",
+      "price": 32990,
+      "colorways": [
+        {
+          "name": "White",
+          "slots": {
+            "Top": "white",
+            "Frame": "white"
+          }
+        },
+        {
+          "name": "Oak & white",
+          "slots": {
+            "Top": "oak",
+            "Frame": "white"
+          }
+        },
+        {
+          "name": "Black",
+          "slots": {
+            "Top": "black",
+            "Frame": "black"
+          }
+        }
+      ]
+    },
+    {
+      "id": "loft",
+      "name": "LOFT",
+      "type": "Work table",
+      "desc": "A big, sturdy table with a thick solid top on a welded steel frame. Room for two to work.",
+      "dims": "160 × 80 cm, height 75 cm",
+      "seats": "2–6 people",
+      "price": 39990,
+      "colorways": [
+        {
+          "name": "Oak & black steel",
+          "slots": {
+            "Top": "oak",
+            "Frame": "steel_black"
+          }
+        },
+        {
+          "name": "Walnut & black steel",
+          "slots": {
+            "Top": "walnut",
+            "Frame": "steel_black"
+          }
+        },
+        {
+          "name": "Ash & white steel",
+          "slots": {
+            "Top": "ash",
+            "Frame": "steel_white"
+          }
+        }
+      ]
+    },
+    {
+      "id": "orbit",
+      "name": "ORBIT",
+      "type": "Coffee table",
+      "desc": "A round coffee table with a lower shelf for books and magazines.",
+      "dims": "Ø 80 cm, height 45 cm",
+      "seats": "Living room",
+      "price": 12990,
+      "colorways": [
+        {
+          "name": "Natural ash",
+          "slots": {
+            "Top": "ash",
+            "Frame": "ash"
+          }
+        },
+        {
+          "name": "Walnut",
+          "slots": {
+            "Top": "walnut",
+            "Frame": "walnut"
+          }
+        },
+        {
+          "name": "Sage green",
+          "slots": {
+            "Top": "sage",
+            "Frame": "sage"
+          }
+        }
+      ]
+    }
+  ]
+}

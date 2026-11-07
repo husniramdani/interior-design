@@ -38,6 +38,35 @@ h1 { font-size: clamp(40px, 5vw, 68px); line-height: 1.02; letter-spacing: -0.03
 .cta { background: var(--accent); color: #fff; padding: 14px 26px; border-radius: 999px; font-size: 15px; }
 .price { font-size: 22px; font-weight: 600; }
 
+.colors { margin: 0 0 32px; }
+.label { font-size: 13px; color: var(--muted); margin: 0 0 12px; letter-spacing: 0.02em; }
+.label span { color: var(--ink); font-weight: 600; margin-left: 6px; }
+.swatches { display: flex; gap: 12px; }
+.swatch {
+  width: 38px; height: 38px; border-radius: 50%; cursor: pointer; padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  outline: 2px solid transparent; outline-offset: 3px;
+  transition: outline-color 0.15s, transform 0.15s;
+}
+.swatch:hover { transform: scale(1.06); }
+.swatch.active { outline-color: var(--ink); }
+
+.collection {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
+  padding: 8px 48px 40px;
+}
+.card {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  background: #fbfaf7; border: 1px solid var(--line); border-radius: 14px;
+  padding: 10px 12px 14px; cursor: pointer; font: inherit; color: inherit; text-align: left;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06); }
+.card.active { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.card img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; margin-bottom: 6px; }
+.card-name { font-weight: 700; letter-spacing: 0.12em; font-size: 13px; }
+.card-type { font-size: 12px; color: var(--muted); }
+
 .viewer { position: relative; height: min(72vh, 680px); cursor: grab; touch-action: none; }
 .viewer:active { cursor: grabbing; }
 .hint {
@@ -45,7 +74,10 @@ h1 { font-size: clamp(40px, 5vw, 68px); line-height: 1.02; letter-spacing: -0.03
   margin: 0; font-size: 12px; color: var(--muted); letter-spacing: 0.06em;
   pointer-events: none;
 }
-.loader { font-size: 13px; color: var(--muted); }
+.loader {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: 13px; color: var(--muted); pointer-events: none;
+}
 
 .details {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
@@ -60,4 +92,6 @@ h1 { font-size: clamp(40px, 5vw, 68px); line-height: 1.02; letter-spacing: -0.03
   .hero { grid-template-columns: 1fr; padding: 0 20px; }
   .viewer { height: 52vh; }
   .details { grid-template-columns: 1fr; margin: 0 20px; }
+  .collection { grid-template-columns: repeat(5, 150px); overflow-x: auto; padding: 8px 20px 28px; scroll-snap-type: x mandatory; }
+  .card { scroll-snap-align: start; }
 }
