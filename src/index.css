@@ -66,6 +66,59 @@ h1 { font-size: clamp(44px, 6vw, 84px); line-height: 0.95; letter-spacing: -0.03
 .swatch:hover { transform: scale(1.06); }
 .swatch.active { outline-color: var(--ink); }
 
+.opt + .opt { margin-top: 24px; }
+
+/* ---------- book picker ---------- */
+.books-opt .label { display: flex; align-items: baseline; gap: 6px; }
+.books-opt .label span { margin-left: 0; font-weight: 500; color: var(--muted); }
+.text-btn {
+  margin-left: auto; border: 0; background: none; padding: 0; cursor: pointer;
+  font-size: 12px; color: var(--muted); text-decoration: underline; text-underline-offset: 3px;
+}
+.text-btn:hover { color: var(--ink); }
+.book-picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px; max-width: 440px; }
+.book-chip {
+  position: relative; display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; min-height: 52px; text-align: left; cursor: pointer;
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  transition: border-color 0.15s, transform 0.12s, box-shadow 0.15s;
+}
+.book-chip:hover { border-color: #b9b2a6; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); }
+.book-chip:active { transform: scale(0.97); }
+.book-icon {
+  flex: none; border-radius: 2px 3px 3px 2px;
+  box-shadow: inset 3px 0 0 rgba(0, 0, 0, 0.18), inset -2px 0 0 rgba(255, 255, 255, 0.25), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.book-icon.paper { box-shadow: inset 0 -9px 0 #3f5a4b, 0 1px 2px rgba(0, 0, 0, 0.2); }
+.book-text { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+.book-text b { font-size: 13px; font-weight: 600; }
+.book-text small { font-size: 11px; color: var(--muted); }
+.plus {
+  position: absolute; top: 6px; right: 8px; font-size: 14px; line-height: 1; color: var(--muted);
+}
+
+/* ---------- selected-book toolbar (floats over the 3D view) ---------- */
+.toolbar {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 4px; padding: 5px;
+  background: rgba(28, 27, 25, 0.92); color: #fff; border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); backdrop-filter: blur(6px);
+  animation: pop 0.16s ease-out;
+}
+@keyframes pop { from { opacity: 0; transform: translate(-50%, 6px); } }
+.toolbar-name { display: flex; align-items: center; gap: 8px; padding: 0 10px 0 8px; font-size: 13px; white-space: nowrap; }
+.toolbar-name i { width: 10px; height: 14px; border-radius: 2px; box-shadow: inset 2px 0 0 rgba(0, 0, 0, 0.25); }
+.toolbar button {
+  display: grid; place-items: center; width: 38px; height: 38px; padding: 0;
+  border: 0; border-radius: 999px; background: transparent; color: #fff; cursor: pointer;
+  transition: background 0.12s;
+}
+.toolbar button:hover { background: rgba(255, 255, 255, 0.14); }
+.toolbar button.danger:hover { background: #a3412b; }
+.toolbar svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.toolbar .done { width: auto; padding: 0 16px; background: #fff; color: var(--ink); font-size: 13px; font-weight: 600; margin-left: 4px; }
+.toolbar .done:hover { background: #ece8e1; }
+
 /* ---------- details ---------- */
 .specs { margin: 0; display: grid; gap: 0; max-width: 440px; border-top: 1px solid var(--line); }
 .specs div {
@@ -125,7 +178,20 @@ h1 { font-size: clamp(44px, 6vw, 84px); line-height: 0.95; letter-spacing: -0.03
   .hint-mouse { display: none; }
   .hint-touch { display: inline; }
 
-  .colors { margin: 14px 0 22px; display: flex; flex-direction: column; align-items: center; }
+  .colors { margin: 14px 0 22px; }
+  .opt[role="radiogroup"] { display: flex; flex-direction: column; align-items: center; }
+  .opt + .opt { margin-top: 18px; }
+  /* swipeable row of books, bleeding to the screen edge */
+  .book-picker {
+    display: flex; overflow-x: auto; max-width: none; gap: 8px;
+    margin: 0 calc(-1 * var(--pad)); padding: 2px var(--pad) 4px; scrollbar-width: none;
+  }
+  .book-picker::-webkit-scrollbar { display: none; }
+  .book-chip { flex: 0 0 auto; min-height: 56px; padding-right: 26px; }
+  .toolbar { bottom: 10px; }
+  .toolbar-name { display: none; }
+  .toolbar button { width: 44px; height: 44px; }
+  .toolbar .done { height: 44px; }
   .swatch { width: 44px; height: 44px; } /* finger-sized */
 
   /* horizontal, swipeable table picker that bleeds to the screen edge */

@@ -20,6 +20,22 @@ gltf-transform meshopt → public/models/<id>.glb                (≈175 KB for 
 website applies finishes per slot at runtime                  (colour switch = no reload)
 ```
 
+### Book styling (user-placed)
+
+Seven book assets (art books, novels, a paperback) are built in Blender by `blender/books.py` and exported together as `public/models/books.glb` (≈116 KB, cloth-texture covers, page-edge texture, gold spine foil). Visitors place them on the table themselves:
+
+- **Add:** pick a book from "Style it with books". It drops into a free spot, and the camera glides to a higher placing view.
+- **Move:** drag a book. It stays inside the table outline (rectangle or circle, from `surface` in the catalog) and the camera stays still while dragging.
+- **Stack:** drop a book onto another one. Pull the bottom one away and the top one settles back down (`src/layout.ts`).
+- **Rotate:** drag the round pin handle (it snaps gently to 15° steps), or use the toolbar buttons or the `R` / `Shift+R` keys.
+- **Remove:** the bin in the toolbar or `Delete`. "Clear all" empties the table. Each table remembers its own books.
+
+### Shadows
+
+- **Floor:** baked in Blender per table (`bake_shadows` in `blender/books.py`, top-down shadow catcher), post-processed to fade to zero at the edges, and shown as `public/shadows/floor_<id>.png`.
+- **Books:** a soft-edged shadow drawn in a shader under every book, which follows it live and softens while the book is lifted.
+- drei `<ContactShadows>` is not used. With three r187 its shadow render target stayed empty (checked by reading its pixels).
+
 ### Materials
 
 - **Wood** (ash, oak, walnut, black-stained oak): scanned Poly Haven veneers (CC0) with colour, normal and roughness maps, 1 tile = 1 m. UVs are box-projected in world metres with the grain along each part's long axis.
@@ -39,3 +55,4 @@ website applies finishes per slot at runtime                  (colour switch = n
 - `node qa/colorways.mjs http://localhost:4173 qa/out` clicks through all 15 table × colour combinations in headless Chrome and screenshots each one.
 - `CLOSE="studio:2,orbit:2" node qa/colorways.mjs …` zooms in on specific combinations to check surface detail. Add `MOBILE=1` to use an iPhone-size viewport.
 - `node qa/layout.mjs http://localhost:4173 qa/out` takes full-page screenshots at iPhone, Android, tablet and desktop sizes, and checks section order, horizontal overflow and console errors.
+- `node qa/books.mjs http://localhost:4173 qa/out` drives the book editor with real mouse events on LISA, TULIP and a phone-size STUDIO. It covers add, stack, gravity, dragging past the edge, rotating with the buttons and the handle, remove, the camera staying still during drags, and orbiting afterwards. It reads the results back from the three.js scene.

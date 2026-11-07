@@ -1,0 +1,56 @@
+{
+ "lisa": {
+  "floor": {
+   "file": "floor_lisa.png",
+   "size": 2.4
+  },
+  "top": {
+   "file": "books_lisa_top.png",
+   "size": 1.6
+  }
+ },
+ "studio": {
+  "floor": {
+   "file": "floor_studio.png",
+   "size": 2.2
+  },
+  "top": {
+   "file": "books_studio_top.png",
+   "size": 1.4
+  }
+ },
+ "tulip": {
+  "floor": {
+   "file": "floor_tulip.png",
+   "size": 2.0
+  },
+  "top": {
+   "file": "books_tulip_top.png",
+   "size": 1.1
+  }
+ },
+ "loft": {
+  "floor": {
+   "file": "floor_loft.png",
+   "size": 2.6
+  },
+  "top": {
+   "file": "books_loft_top.png",
+   "size": 1.8
+  }
+ },
+ "orbit": {
+  "floor": {
+   "file": "floor_orbit.png",
+   "size": 1.8
+  },
+  "top": {
+   "file": "books_orbit_top.png",
+   "size": 0.9
+  },
+  "shelf": {
+   "file": "books_orbit_shelf.png",
+   "size": 0.7
+  }
+ }
+}

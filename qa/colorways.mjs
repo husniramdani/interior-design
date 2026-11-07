@@ -47,8 +47,16 @@ for (const t of catalog.tables) {
     await evalJs(`document.querySelector('[data-color="${i}"]').click()`); await sleep(500)
     if (close) {
       const cx = rect.x + rect.width / 2, cy = rect.y + rect.height / 2
-      for (let k = 0; k < 12; k++) { await send('Input.dispatchMouseEvent', { type: 'mouseWheel', x: cx, y: cy, deltaX: 0, deltaY: -120 }); await sleep(40) }
-      await sleep(900)
+      // TILT=px drags the camera up (look down at the tabletop); ZOOM=n wheel ticks (default 12)
+      const tilt = Number(process.env.TILT ?? 0)
+      if (tilt) {
+        const md = (type, x, y) => send('Input.dispatchMouseEvent', { type, x, y, button: 'left', buttons: type === 'mouseReleased' ? 0 : 1, clickCount: 1 })
+        await md('mousePressed', cx, cy)
+        for (let k = 1; k <= 10; k++) { await md('mouseMoved', cx, cy + (tilt * k) / 10); await sleep(16) }
+        await md('mouseReleased', cx, cy + tilt); await sleep(300)
+      }
+      for (let k = 0; k < Number(process.env.ZOOM ?? 12); k++) { await send('Input.dispatchMouseEvent', { type: 'mouseWheel', x: cx, y: cy, deltaX: 0, deltaY: -120 }); await sleep(40) }
+      await sleep(1200)
     }
     const label = await evalJs(`document.querySelector('.label span').textContent + ' | ' + document.querySelector('h1').textContent`)
     const r = await send('Page.captureScreenshot', { format: 'png', clip: rect })

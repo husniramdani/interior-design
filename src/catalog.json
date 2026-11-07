@@ -12,6 +12,15 @@
     "steel": {"label": "Steel", "type": "paint", "color": "#c9c9c7", "roughness": 0.3, "metalness": 1.0, "swatch": "#c9c9c7", "surface": "brushed", "scale": 0.15},
     "brass": {"label": "Brass", "type": "paint", "color": "#b8925a", "roughness": 0.3, "metalness": 1.0, "swatch": "#b8925a", "surface": "brushed", "scale": 0.15}
   },
+  "books": {
+    "art_sage": {"kind": "hard", "w": 0.24, "h": 0.3, "t": 0.028, "color": "#74846d", "bands": true, "label": true},
+    "art_cream": {"kind": "hard", "w": 0.23, "h": 0.29, "t": 0.022, "color": "#ddd3bf", "bands": true, "label": false},
+    "art_charcoal": {"kind": "hard", "w": 0.25, "h": 0.31, "t": 0.032, "color": "#2e2e30", "bands": true, "label": true},
+    "novel_navy": {"kind": "hard", "w": 0.135, "h": 0.205, "t": 0.032, "color": "#26344f", "bands": true, "label": false},
+    "novel_terracotta": {"kind": "hard", "w": 0.13, "h": 0.2, "t": 0.026, "color": "#a95a3a", "bands": false, "label": false},
+    "novel_ochre": {"kind": "hard", "w": 0.14, "h": 0.21, "t": 0.036, "color": "#bf9440", "bands": true, "label": false},
+    "paperback_white": {"kind": "paper", "w": 0.11, "h": 0.178, "t": 0.019, "color": "#ece6da", "bands": false, "label": false}
+  },
   "tables": [
     {
       "id": "lisa",
@@ -42,7 +51,15 @@
             "Frame": "smoked"
           }
         }
-      ]
+      ],
+      "surface": {
+        "y": 0.74,
+        "rect": [
+          1.4,
+          0.78
+        ]
+      },
+      "floorShadow": 2.4
     },
     {
       "id": "studio",
@@ -76,7 +93,15 @@
             "Accent": "brass"
           }
         }
-      ]
+      ],
+      "surface": {
+        "y": 0.75,
+        "rect": [
+          1.2,
+          0.6
+        ]
+      },
+      "floorShadow": 2.2
     },
     {
       "id": "tulip",
@@ -107,7 +132,12 @@
             "Frame": "black"
           }
         }
-      ]
+      ],
+      "surface": {
+        "y": 0.74,
+        "circle": 0.5
+      },
+      "floorShadow": 2.0
     },
     {
       "id": "loft",
@@ -138,7 +168,15 @@
             "Frame": "steel_white"
           }
         }
-      ]
+      ],
+      "surface": {
+        "y": 0.75,
+        "rect": [
+          1.6,
+          0.8
+        ]
+      },
+      "floorShadow": 2.6
     },
     {
       "id": "orbit",
@@ -169,7 +207,12 @@
             "Frame": "sage"
           }
         }
-      ]
+      ],
+      "surface": {
+        "y": 0.45,
+        "circle": 0.4
+      },
+      "floorShadow": 1.8
     }
   ]
 }

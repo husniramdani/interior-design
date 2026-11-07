@@ -2,7 +2,6 @@ import { Suspense, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import {
   Bounds,
-  ContactShadows,
   Environment,
   Lightformer,
   OrbitControls,
@@ -22,6 +21,8 @@ import {
   Vector2,
 } from 'three'
 import { finishes, modelUrl, surfaceTextures, tables, woodTextures, type Colorway } from './catalog'
+import BookEditor from './BookEditor'
+import type { Placed } from './layout'
 
 const QA = new URLSearchParams(location.search).has('qa')
 
@@ -137,7 +138,29 @@ function Refit({ dep }: { dep: string }) {
   return null
 }
 
-export default function Viewer({ tableId, colorway }: { tableId: string; colorway: Colorway }) {
+/** Floor shadow baked in Blender (top-down shadow-catcher render, see blender/books.py bake_shadows). */
+function FloorShadow({ id, size }: { id: string; size: number }) {
+  const map = useTexture(`/shadows/floor_${id}.png`)
+  return (
+    <mesh rotation-x={-Math.PI / 2} position={[0, 0.0008, 0]} renderOrder={1}>
+      <planeGeometry args={[size, size]} />
+      <meshBasicMaterial color="#2a2420" alphaMap={map} transparent opacity={0.6} depthWrite={false} />
+    </mesh>
+  )
+}
+
+type ViewerProps = {
+  tableId: string
+  colorway: Colorway
+  placed: Placed[]
+  selected: string | null
+  onSelect: (uid: string | null) => void
+  onChange: (next: Placed[]) => void
+  focus: number
+}
+
+export default function Viewer({ tableId, colorway, placed, selected, onSelect, onChange, focus }: ViewerProps) {
+  const table = tables.find((t) => t.id === tableId)!
   const margin = useFitMargin()
   return (
     <>
@@ -146,13 +169,19 @@ export default function Viewer({ tableId, colorway }: { tableId: string; colorwa
       dpr={[1, 2]}
       camera={{ position: [2.1, 1.35, 2.3], fov: 35 }}
       gl={{ antialias: true, preserveDrawingBuffer: true }}
+      onCreated={(state) => {
+        if (QA) (window as unknown as { __r3f: unknown }).__r3f = state // headless QA can inspect the scene
+      }}
+      onPointerMissed={() => onSelect(null)}
     >
       <Suspense fallback={null}>
         <Bounds fit clip observe margin={margin} maxDuration={0.7}>
           <Refit dep={tableId + margin} />
           <TableModel id={tableId} colorway={colorway} />
         </Bounds>
-        <ContactShadows position={[0, 0.001, 0]} opacity={0.55} scale={4} blur={2.4} far={1} resolution={1024} />
+        {/* outside <Bounds>: books never change the camera framing */}
+        <BookEditor key={tableId} surface={table.surface} placed={placed} selected={selected} onSelect={onSelect} onChange={onChange} focus={focus} />
+        <FloorShadow key={`floor-${tableId}`} id={tableId} size={table.floorShadow} />
         <Environment resolution={256}>
           <color attach="background" args={['#bdb6ac']} />
           <Lightformer intensity={0.7} position={[0, -3, 0]} rotation-x={-Math.PI / 2} scale={[8, 8, 1]} color="#efe7dc" />
@@ -166,11 +195,12 @@ export default function Viewer({ tableId, colorway }: { tableId: string; colorwa
         makeDefault
         enablePan={false}
         enableDamping
-        minDistance={0.9}
+        zoomToCursor // scroll/pinch zooms toward what you point at (e.g. a book), not the table centre
+        minDistance={0.6}
         maxDistance={6}
         minPolarAngle={0.2}
         maxPolarAngle={Math.PI / 2 - 0.05}
-        autoRotate={!QA}
+        autoRotate={!QA && placed.length === 0} // stop turning once the user starts styling
         autoRotateSpeed={0.6}
       />
     </Canvas>

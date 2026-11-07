@@ -42,7 +42,7 @@ for (const v of VIEWPORTS) {
   report[v.name] = await evalJs(`(() => {
     const vw = document.documentElement.clientWidth
     const box = (s) => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(); return [Math.round(r.x), Math.round(r.y + scrollY), Math.round(r.width), Math.round(r.height)] }
-    const overflow = [...document.querySelectorAll('body *')].filter(e => { const r = e.getBoundingClientRect(); return (r.right > vw + 1 || r.left < -1) && !e.closest('.collection') }).map(e => e.className || e.tagName).slice(0, 8)
+    const overflow = [...document.querySelectorAll('body *')].filter(e => { const r = e.getBoundingClientRect(); return (r.right > vw + 1 || r.left < -1) && !e.closest('.collection, .book-picker') }).map(e => e.className || e.tagName).slice(0, 8)
     const order = ['.title', '.viewer', '.colors', '.collection', '.info'].map(s => [s, box(s)?.[1]]).sort((a, b) => a[1] - b[1]).map(a => a[0])
     return { grid: getComputedStyle(document.querySelector('.hero')).gridTemplateColumns, hero: box('.hero'), colBox: box('.collection'), pageScrollWidth: document.documentElement.scrollWidth, vw, overflow, order, viewer: box('.viewer'), swatch: box('.swatch'), card: box('.card'),
       hasShop: /shop|cart|¥/i.test(document.body.innerText), hint: [...document.querySelectorAll('.hint span')].filter(s => getComputedStyle(s).display !== 'none').map(s => s.textContent) }
