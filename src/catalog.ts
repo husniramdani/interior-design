@@ -17,7 +17,7 @@ export type Colorway = { name: string; slots: Partial<Record<Slot, string>> }
 
 export type TableDef = {
   id: string; name: string; type: string; desc: string
-  dims: string; seats: string; price: number; colorways: Colorway[]
+  dims: string; seats: string; colorways: Colorway[]
 }
 
 export const finishes = data.finishes as Record<string, Finish>
@@ -39,4 +39,3 @@ export function swatchBackground(cw: Colorway) {
   return a === b ? a : `linear-gradient(135deg, ${a} 0 50%, ${b} 50% 100%)`
 }
 
-export const formatPrice = (yen: number) => `¥${yen.toLocaleString('ja-JP')}`

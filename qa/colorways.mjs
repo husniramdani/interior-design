@@ -28,13 +28,14 @@ ws.onmessage = (e) => {
 const send = (method, params = {}) => new Promise((r) => { const i = ++id; pending.set(i, r); ws.send(JSON.stringify({ id: i, method, params })) })
 const evalJs = async (expression) => (await send('Runtime.evaluate', { expression, returnByValue: true })).result.result.value
 await send('Runtime.enable'); await send('Page.enable')
-await send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false })
+const MOBILE = !!process.env.MOBILE // MOBILE=1 => iPhone-size viewport
+await send('Emulation.setDeviceMetricsOverride', MOBILE ? { width: 390, height: 844, deviceScaleFactor: 2, mobile: true } : { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false })
 await send('Page.navigate', { url }); await sleep(4000)
 
 const full = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true })
 writeFileSync(`${out}/page_full.png`, Buffer.from(full.result.data, 'base64'))
 
-const rect = await evalJs(`(() => { const r = document.querySelector('.viewer').getBoundingClientRect(); return {x:r.x,y:r.y,width:r.width,height:r.height,scale:1} })()`)
+const rect = await evalJs(`(() => { const r = document.querySelector('.viewer').getBoundingClientRect(); return {x:r.x,y:r.y+scrollY,width:r.width,height:r.height,scale:1} })()`)
 const shots = []
 // CLOSE="studio:2,tulip:2" => zoom in with the mouse wheel and shoot only those combos
 const close = process.env.CLOSE ? Object.fromEntries(process.env.CLOSE.split(',').map((s) => s.split(':'))) : null

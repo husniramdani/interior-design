@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useLayoutEffect, useMemo } from 'react'
+import { Suspense, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import {
   Bounds,
@@ -108,6 +108,27 @@ function TableModel({ id, colorway }: { id: string; colorway: Colorway }) {
 }
 
 /** Re-frame the camera whenever the table changes (coffee table vs. big work table). */
+
+/** Plain DOM overlay (outside the Canvas) – avoids React/portal unmount errors. */
+function Loader() {
+  const { active, progress } = useProgress()
+  return active ? <div className="loader">{progress.toFixed(0)}%</div> : null
+}
+
+/** Narrow (portrait-ish) viewers need more margin: Bounds fits the box's axis size,
+ *  but from a 3/4 angle the table's diagonal is wider than its length. */
+function useFitMargin() {
+  const query = '(max-width: 860px)'
+  const [narrow, setNarrow] = useState(() => matchMedia(query).matches)
+  useEffect(() => {
+    const mq = matchMedia(query)
+    const on = () => setNarrow(mq.matches)
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [])
+  return narrow ? 1.45 : 1.15
+}
+
 function Refit({ dep }: { dep: string }) {
   const api = useBounds()
   useEffect(() => {
@@ -116,13 +137,8 @@ function Refit({ dep }: { dep: string }) {
   return null
 }
 
-/** Plain DOM overlay (outside the Canvas) – avoids React/portal unmount errors. */
-function Loader() {
-  const { active, progress } = useProgress()
-  return active ? <div className="loader">{progress.toFixed(0)}%</div> : null
-}
-
 export default function Viewer({ tableId, colorway }: { tableId: string; colorway: Colorway }) {
+  const margin = useFitMargin()
   return (
     <>
     <Loader />
@@ -132,8 +148,8 @@ export default function Viewer({ tableId, colorway }: { tableId: string; colorwa
       gl={{ antialias: true, preserveDrawingBuffer: true }}
     >
       <Suspense fallback={null}>
-        <Bounds fit clip observe margin={1.15} maxDuration={0.7}>
-          <Refit dep={tableId} />
+        <Bounds fit clip observe margin={margin} maxDuration={0.7}>
+          <Refit dep={tableId + margin} />
           <TableModel id={tableId} colorway={colorway} />
         </Bounds>
         <ContactShadows position={[0, 0.001, 0]} opacity={0.55} scale={4} blur={2.4} far={1} resolution={1024} />

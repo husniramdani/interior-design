@@ -37,4 +37,5 @@ website applies finishes per slot at runtime                  (colour switch = n
 ### QA
 
 - `node qa/colorways.mjs http://localhost:4173 qa/out` clicks through all 15 table × colour combinations in headless Chrome and screenshots each one.
-- `CLOSE="studio:2,orbit:2" node qa/colorways.mjs …` zooms in on specific combinations to check surface detail.
+- `CLOSE="studio:2,orbit:2" node qa/colorways.mjs …` zooms in on specific combinations to check surface detail. Add `MOBILE=1` to use an iPhone-size viewport.
+- `node qa/layout.mjs http://localhost:4173 qa/out` takes full-page screenshots at iPhone, Android, tablet and desktop sizes, and checks section order, horizontal overflow and console errors.
